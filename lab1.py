@@ -29,17 +29,19 @@ def sha_384_32(message):
     return h_32
 
 
-
-
-def pre1():
-
+def message_list():
+    
     pib = 'Навроцька Іванна Аркадіївна'
     messages = []
-
+    
     for i in range(100):
         piece = ''.join(random.choice(string.ascii_letters + string.digits) for j in range(5))
-        m = f'{pib} {piece}'
-        messages.append(m)
+        messages.append(f'{pib} {piece}')
+        
+    return messages
+        
+
+def pre1(messages):
 
     with open('pre1_res.txt', 'w', encoding='utf-8') as f:
 
@@ -70,8 +72,13 @@ def pre1():
             f.write('\n\n')
 
     print('the end')
-    
-pre1()
+
+
+messages =  message_list()
+pre1(messages)
+
+
+
 
         
 
