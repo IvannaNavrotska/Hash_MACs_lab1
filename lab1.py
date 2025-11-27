@@ -138,7 +138,6 @@ def coll1(messages):
         for i, my_message in enumerate(messages, 1):
 
             my_hash = sha_384(my_message)
-            my_hash16 = my_hash[-4:]
 
             n = 1
             k = 1
@@ -150,9 +149,9 @@ def coll1(messages):
             while True:
                 new_message = my_message + str(n)
                 new_hash = sha_384_32(new_message)
-
+                
                 if new_hash in for_coll:
-                    f.write(f'{n}: Є колізія:{new_message},{new_hash} і {for_coll[new_hash]},{new_hash}\n')
+                    f.write(f'{n}: є колізія:{new_message},{new_hash} і {for_coll[new_hash]},{new_hash}\n')
                     f.write('\n\n')
                     break
 
@@ -167,11 +166,47 @@ def coll1(messages):
     print('the end')
 
 
-messages =  message_list()
-coll1(messages)    
+#messages =  message_list()
+#coll1(messages)    
+
+
+def coll2(messages):
+    
+    with open('coll2_res.txt', 'w', encoding='utf-8') as f:
+
+        for i, my_message in enumerate(messages, 1):
+
+            my_hash = sha_384(my_message)
+
+            n = 1
+            k = 1
+      
+            f.write(f'повідомлення: {my_message}, геш повідомлення: {my_hash}\n')
+
+            for_coll = {}
+
+            while True:
+                new_message = random_changes(my_message)
+                new_hash = sha_384_32(new_message)
+
+                if new_hash in for_coll:
+                    f.write(f'{n}: є колізія:{new_message},{new_hash} і {for_coll[new_hash]},{new_hash}\n')
+                    f.write('\n\n')
+                    break
+
+                for_coll[new_hash] = new_message
+
+                if k <= 30:
+                    f.write(f'{n}: {new_message}, {new_hash}\n')
+                    k += 1
+
+                n += 1
+
+    print('the end')
 
     
-
+messages =  message_list()
+coll2(messages)   
 
 
 
