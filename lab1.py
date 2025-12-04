@@ -3,13 +3,6 @@ import random
 import string
 
 
-def sha_384(message):
-
-    m = message.encode()
-    h = hashlib.sha384(m).hexdigest()
-    
-    return h
-
 
 def sha_384_16(message):
 
@@ -47,9 +40,8 @@ def pre1(messages):
 
         for i, my_message in enumerate(messages, 1):
 
-            my_hash = sha_384(my_message)
-            my_hash16 = my_hash[-4:]
-
+            my_hash = sha_384_16(my_message)
+            
             n = 1
             k = 1
       
@@ -58,7 +50,7 @@ def pre1(messages):
             new_message = my_message + str(n)
             new_hash = sha_384_16(new_message)
 
-            while new_hash != my_hash16:
+            while new_hash != my_hash:
 
                 if k <= 30:
                     f.write(f'{n}: {new_message}, {new_hash}\n')
@@ -100,8 +92,7 @@ def pre2(messages):
 
         for i, my_message in enumerate(messages, 1):
 
-            my_hash = sha_384(my_message)
-            my_hash16 = my_hash[-4:]
+            my_hash = sha_384_16(my_message)
 
             n = 1
             k = 1
@@ -111,7 +102,7 @@ def pre2(messages):
             new_message = random_changes(my_message)
             new_hash = sha_384_16(new_message)
 
-            while new_hash != my_hash16:
+            while new_hash != my_hash:
 
                 if k <= 30:
                     f.write(f'{n}: {new_message}, {new_hash}\n')
@@ -137,7 +128,7 @@ def coll1(messages):
 
         for i, my_message in enumerate(messages, 1):
 
-            my_hash = sha_384(my_message)
+            my_hash = sha_384_32(my_message)
 
             n = 1
             k = 1
@@ -176,7 +167,7 @@ def coll2(messages):
 
         for i, my_message in enumerate(messages, 1):
 
-            my_hash = sha_384(my_message)
+            my_hash = sha_384_32(my_message)
 
             n = 1
             k = 1
