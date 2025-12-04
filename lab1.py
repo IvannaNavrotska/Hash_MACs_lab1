@@ -181,9 +181,11 @@ def coll2(messages):
                 new_hash = sha_384_32(new_message)
 
                 if new_hash in for_coll:
-                    f.write(f'{n}: є колізія:{new_message},{new_hash} і {for_coll[new_hash]},{new_hash}\n')
-                    f.write('\n\n')
-                    break
+                    coll_is = for_coll[new_hash]
+
+                    if new_message != coll_is:
+                        f.write(f'{n}: є колізія: {coll_is}, {new_hash} і {new_message}, {new_hash}\n\n')
+                        break
 
                 for_coll[new_hash] = new_message
 
@@ -194,6 +196,7 @@ def coll2(messages):
                 n += 1
 
     print('the end')
+
 
     
 messages =  message_list()
