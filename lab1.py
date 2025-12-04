@@ -35,9 +35,10 @@ def message_list():
         
 
 def pre1(messages):
+    
+    last_n = []
 
     with open('pre1_res.txt', 'w', encoding='utf-8') as f:
-
         for i, my_message in enumerate(messages, 1):
 
             my_hash = sha_384_16(my_message)
@@ -60,10 +61,14 @@ def pre1(messages):
                 new_message = my_message + str(n)
                 new_hash = sha_384_16(new_message)
         
-            f.write(f'останнє значення: {n}: {new_message}, {new_hash}')
-            f.write('\n\n')
+            last_n.append(n)
+
+            f.write(f'останнє значення: {n}: {new_message}, {new_hash}\n\n')
+
+        f.write(f'{last_n}')
 
     print('the end')
+
 
 
 #messages =  message_list()
@@ -88,6 +93,8 @@ def random_changes(m):
 
 def pre2(messages):
 
+    last_n = []
+
     with open('pre2_res.txt', 'w', encoding='utf-8') as f:
 
         for i, my_message in enumerate(messages, 1):
@@ -111,9 +118,12 @@ def pre2(messages):
                 n += 1
                 new_message = random_changes(my_message)
                 new_hash = sha_384_16(new_message)
-        
+
+            last_n.append(n)
+            
             f.write(f'останнє значення: {n}: {new_message}, {new_hash}')
             f.write('\n\n')
+            f.write(f'{last_n}')
 
     print('the end')
 
@@ -123,6 +133,8 @@ def pre2(messages):
 
 
 def coll1(messages):
+
+    last_n = []
     
     with open('coll1_res.txt', 'w', encoding='utf-8') as f:
 
@@ -142,7 +154,7 @@ def coll1(messages):
                 new_hash = sha_384_32(new_message)
                 
                 if new_hash in for_coll:
-                    f.write(f'{n}: є колізія:{new_message},{new_hash} і {for_coll[new_hash]},{new_hash}\n')
+                    f.write(f'{n}: є колізія: {new_message},{new_hash} і {for_coll[new_hash]},{new_hash}\n')
                     f.write('\n\n')
                     break
 
@@ -153,15 +165,20 @@ def coll1(messages):
                     k += 1
 
                 n += 1
+                
+            last_n.append(n)
+        f.write(f'{last_n}')
 
     print('the end')
 
-
+   
 #messages =  message_list()
-#coll1(messages)    
+#coll1(messages)
 
 
 def coll2(messages):
+
+    last_n = []
     
     with open('coll2_res.txt', 'w', encoding='utf-8') as f:
 
@@ -194,13 +211,22 @@ def coll2(messages):
                     k += 1
 
                 n += 1
-
+                
+            last_n.append(n)
+        f.write(f'{last_n}')
+            
     print('the end')
 
 
-    
-messages =  message_list()
-coll2(messages)   
+
+messages_p =  message_list()
+pre1(messages_p)
+pre2(messages_p)
+
+
+messages_c =  message_list()
+coll1(messages_c)
+coll2(messages_c)   
 
 
 
