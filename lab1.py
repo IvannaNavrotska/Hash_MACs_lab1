@@ -3,6 +3,13 @@ import random
 import string
 
 
+def sha_384(message):
+
+    m = message.encode()
+    h = hashlib.sha384(m).hexdigest()
+    
+    return h
+
 
 def sha_384_16(message):
 
@@ -46,7 +53,7 @@ def pre1(messages):
             n = 1
             k = 1
       
-            f.write(f'повідомлення: {my_message}, геш повідомлення: {my_hash}\n')
+            f.write(f'повідомлення: {my_message}, геш повідомлення: {sha_384(my_message)}\n')
         
             new_message = my_message + str(n)
             new_hash = sha_384_16(new_message)
@@ -54,7 +61,7 @@ def pre1(messages):
             while new_hash != my_hash:
 
                 if k <= 30:
-                    f.write(f'{n}: {new_message}, {new_hash}\n')
+                    f.write(f'{n}: {new_message}, {sha_384(new_message)}\n')
                     k += 1
                 
                 n += 1
@@ -63,7 +70,7 @@ def pre1(messages):
         
             last_n.append(n)
 
-            f.write(f'останнє значення: {n}: {new_message}, {new_hash}\n\n')
+            f.write(f'останнє значення: {n}: {new_message}, {sha_384(new_message)}\n\n')
 
         f.write(f'{last_n}')
 
@@ -104,7 +111,7 @@ def pre2(messages):
             n = 1
             k = 1
       
-            f.write(f'повідомлення: {my_message}, геш повідомлення: {my_hash}\n')
+            f.write(f'повідомлення: {my_message}, геш повідомлення: {sha_384(my_message)}\n')
         
             new_message = random_changes(my_message)
             new_hash = sha_384_16(new_message)
@@ -112,7 +119,7 @@ def pre2(messages):
             while new_hash != my_hash:
 
                 if k <= 30:
-                    f.write(f'{n}: {new_message}, {new_hash}\n')
+                    f.write(f'{n}: {new_message}, {sha_384(new_message)}\n')
                     k += 1
                 
                 n += 1
@@ -121,7 +128,7 @@ def pre2(messages):
 
             last_n.append(n)
             
-            f.write(f'останнє значення: {n}: {new_message}, {new_hash}')
+            f.write(f'останнє значення: {n}: {new_message}, {sha_384(new_message)}')
             f.write('\n\n')
             f.write(f'{last_n}')
 
@@ -145,7 +152,7 @@ def coll1(messages):
             n = 1
             k = 1
       
-            f.write(f'повідомлення: {my_message}, геш повідомлення: {my_hash}\n')
+            f.write(f'повідомлення: {my_message}, геш повідомлення: {sha_384(my_message)}\n')
 
             for_coll = {}
 
@@ -154,14 +161,14 @@ def coll1(messages):
                 new_hash = sha_384_32(new_message)
                 
                 if new_hash in for_coll:
-                    f.write(f'{n}: є колізія: {new_message},{new_hash} і {for_coll[new_hash]},{new_hash}\n')
+                    f.write(f'{n}: є колізія: {new_message},{sha_384(new_message)} і {for_coll[new_hash]},{sha_384(new_message)}\n')
                     f.write('\n\n')
                     break
 
                 for_coll[new_hash] = new_message
 
                 if k <= 30:
-                    f.write(f'{n}: {new_message}, {new_hash}\n')
+                    f.write(f'{n}: {new_message}, {sha_384(new_message)}\n')
                     k += 1
 
                 n += 1
@@ -189,7 +196,7 @@ def coll2(messages):
             n = 1
             k = 1
       
-            f.write(f'повідомлення: {my_message}, геш повідомлення: {my_hash}\n')
+            f.write(f'повідомлення: {my_message}, геш повідомлення: {sha_384(my_message)}\n')
 
             for_coll = {}
 
@@ -201,13 +208,13 @@ def coll2(messages):
                     coll_is = for_coll[new_hash]
 
                     if new_message != coll_is:
-                        f.write(f'{n}: є колізія: {coll_is}, {new_hash} і {new_message}, {new_hash}\n\n')
+                        f.write(f'{n}: є колізія: {coll_is}, {sha_384(new_message)} і {new_message}, {sha_384(new_message)}\n\n')
                         break
 
                 for_coll[new_hash] = new_message
 
                 if k <= 30:
-                    f.write(f'{n}: {new_message}, {new_hash}\n')
+                    f.write(f'{n}: {new_message}, {sha_384(new_message)}\n')
                     k += 1
 
                 n += 1
@@ -217,7 +224,9 @@ def coll2(messages):
             
     print('the end')
 
-
+#messages =  message_list()
+#coll2(messages)
+    
 
 messages_p =  message_list()
 pre1(messages_p)
