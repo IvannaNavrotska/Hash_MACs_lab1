@@ -161,7 +161,7 @@ def coll1(messages):
                 new_hash = sha_384_32(new_message)
                 
                 if new_hash in for_coll:
-                    f.write(f'{n}: є колізія: {new_message},{sha_384(new_message)} і {for_coll[new_hash]},{sha_384(new_message)}\n')
+                    f.write(f'{n}: є колізія: {new_message}, {sha_384(new_message)} і {for_coll[new_hash]}, {sha_384(for_coll[new_hash])}\n')
                     f.write('\n\n')
                     break
 
@@ -208,7 +208,7 @@ def coll2(messages):
                     coll_is = for_coll[new_hash]
 
                     if new_message != coll_is:
-                        f.write(f'{n}: є колізія: {coll_is}, {sha_384(new_message)} і {new_message}, {sha_384(new_message)}\n\n')
+                        f.write(f'{n}: є колізія: {coll_is}, {sha_384(coll_is)} і {new_message}, {sha_384(new_message)}\n\n')
                         break
 
                 for_coll[new_hash] = new_message
