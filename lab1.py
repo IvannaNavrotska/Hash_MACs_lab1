@@ -110,29 +110,29 @@ def pre2(messages):
 
             n = 1
             k = 1
-      
-            f.write(f'повідомлення: {my_message}, геш повідомлення: {sha_384(my_message)}\n')
-        
-            new_message = random_changes(my_message)
-            new_hash = sha_384_16(new_message)
 
-            while new_hash != my_hash:
+            f.write(f'повідомлення: {my_message}, геш повідомлення: {sha_384(my_message)}\n')
+
+            while True:
+                new_message = random_changes(my_message)
+                new_hash = sha_384_16(new_message)
+
+                if new_message != my_message and new_hash == my_hash:
+                    break
 
                 if k <= 30:
                     f.write(f'{n}: {new_message}, {sha_384(new_message)}\n')
                     k += 1
-                
+
                 n += 1
-                new_message = random_changes(my_message)
-                new_hash = sha_384_16(new_message)
 
             last_n.append(n)
-            
-            f.write(f'останнє значення: {n}: {new_message}, {sha_384(new_message)}')
-            f.write('\n\n')
-            f.write(f'{last_n}')
+
+            f.write(f'останнє значення: {n}: {new_message}, {sha_384(new_message)}\n\n')
+            f.write(f'{last_n}\n')
 
     print('the end')
+
 
 
 #messages =  message_list()
